@@ -40,7 +40,6 @@ function filterInfections() {
 // Show detailed infection treatment recommendations
 function showInfectionDetail(infectionKey) {
     const infection = infectionGuidelines[infectionKey];
-    const detailPanel = document.getElementById('infection-detail');
 
     // Helper function to format drug information
     function formatDrug(drugString) {
@@ -63,15 +62,9 @@ function showInfectionDetail(infectionKey) {
         }
     }
 
-    let html = `
-        <div class="detail-header">
-            <h2>${infection.name}</h2>
-            <button onclick="closeDetail('infection-detail')" class="close-btn">✕</button>
-        </div>
-    `;
-
+    let treatmentHTML = '';
     infection.types.forEach(type => {
-        html += `
+        treatmentHTML += `
             <div class="treatment-section">
                 <h3>${type.type}</h3>
 
@@ -97,8 +90,29 @@ function showInfectionDetail(infectionKey) {
         `;
     });
 
-    detailPanel.innerHTML = html;
-    detailPanel.classList.add('active');
+    // Create modal
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = `
+        <div class="modal-content infection-modal">
+            <div class="modal-header">
+                <h2>${infection.name}</h2>
+                <button onclick="closeModal()" class="close-btn">✕</button>
+            </div>
+            <div class="modal-body">
+                ${treatmentHTML}
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Close on background click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
 }
 
 // Load organism list
