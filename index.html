@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinical Antibiotic Selection Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🩺 Clinical Antibiotic Selection Tool</h1>
+            <p class="subtitle">Evidence-based antibiotic selection for common infections</p>
+        </header>
+
+        <div class="warning-box">
+            <strong>⚠️ Clinical Tool:</strong> This tool is for educational purposes. Always consider local antibiograms, patient-specific factors, allergies, renal/hepatic function, and consult infectious disease specialists for complex cases.
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('by-infection')">By Infection</button>
+            <button class="tab-button" onclick="showTab('by-organism')">By Organism</button>
+            <button class="tab-button" onclick="showTab('drug-database')">Drug Database</button>
+            <button class="tab-button" onclick="showTab('calculator')">Dosing Calculator</button>
+        </div>
+
+        <!-- BY INFECTION TAB -->
+        <div id="by-infection" class="tab-content active">
+            <h2>Select Antibiotics by Infection Site</h2>
+            <div class="search-box">
+                <input type="text" id="infection-search" placeholder="Search infection types..." onkeyup="filterInfections()">
+            </div>
+
+            <div class="infection-categories">
+                <div class="infection-card" onclick="showInfectionDetail('uti')">
+                    <h3>Urinary Tract Infection (UTI)</h3>
+                    <p>Uncomplicated cystitis, pyelonephritis</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('pneumonia-cap')">
+                    <h3>Community-Acquired Pneumonia (CAP)</h3>
+                    <p>Outpatient and inpatient management</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('skin-soft-tissue')">
+                    <h3>Skin & Soft Tissue Infections</h3>
+                    <p>Cellulitis, abscess, necrotizing fasciitis</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('meningitis')">
+                    <h3>Meningitis</h3>
+                    <p>Bacterial meningitis empiric therapy</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('intra-abdominal')">
+                    <h3>Intra-abdominal Infections</h3>
+                    <p>Appendicitis, diverticulitis, peritonitis</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('sepsis')">
+                    <h3>Sepsis/Septic Shock</h3>
+                    <p>Empiric broad-spectrum coverage</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('endocarditis')">
+                    <h3>Endocarditis</h3>
+                    <p>Native and prosthetic valve</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('osteomyelitis')">
+                    <h3>Osteomyelitis</h3>
+                    <p>Acute and chronic bone infections</p>
+                </div>
+            </div>
+
+            <div id="infection-detail" class="detail-panel"></div>
+        </div>
+
+        <!-- BY ORGANISM TAB -->
+        <div id="by-organism" class="tab-content">
+            <h2>Select Antibiotics by Organism</h2>
+            <div class="search-box">
+                <input type="text" id="organism-search" placeholder="Search organisms..." onkeyup="filterOrganisms()">
+            </div>
+
+            <div class="organism-list" id="organism-list"></div>
+            <div id="organism-detail" class="detail-panel"></div>
+        </div>
+
+        <!-- DRUG DATABASE TAB -->
+        <div id="drug-database" class="tab-content">
+            <h2>Antibiotic Drug Database</h2>
+            <div class="filter-section">
+                <input type="text" id="drug-search" placeholder="Search antibiotics..." onkeyup="filterDrugs()">
+                <select id="class-filter" onchange="filterDrugs()">
+                    <option value="">All Classes</option>
+                    <option value="Penicillins">Penicillins</option>
+                    <option value="Cephalosporins">Cephalosporins</option>
+                    <option value="Carbapenems">Carbapenems</option>
+                    <option value="Fluoroquinolones">Fluoroquinolones</option>
+                    <option value="Macrolides">Macrolides</option>
+                    <option value="Tetracyclines">Tetracyclines</option>
+                    <option value="Glycopeptides">Glycopeptides</option>
+                    <option value="Aminoglycosides">Aminoglycosides</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div id="drug-list" class="drug-grid"></div>
+        </div>
+
+        <!-- DOSING CALCULATOR TAB -->
+        <div id="calculator" class="tab-content">
+            <h2>Antibiotic Dosing Calculator</h2>
+            <div class="calculator-section">
+                <div class="input-group">
+                    <label>Select Antibiotic:</label>
+                    <select id="calc-antibiotic" onchange="updateDosing()">
+                        <option value="">Choose antibiotic...</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Patient Weight (kg):</label>
+                    <input type="number" id="patient-weight" placeholder="70" onchange="updateDosing()">
+                </div>
+                <div class="input-group">
+                    <label>Creatinine Clearance (mL/min):</label>
+                    <input type="number" id="creatinine-clearance" placeholder="90" onchange="updateDosing()">
+                </div>
+                <div id="dosing-result" class="dosing-result"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Created for clinical decision support | Always verify with current guidelines and local antibiograms</p>
+    </footer>
+
+    <script src="antibiotics-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
