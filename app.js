@@ -42,6 +42,27 @@ function showInfectionDetail(infectionKey) {
     const infection = infectionGuidelines[infectionKey];
     const detailPanel = document.getElementById('infection-detail');
 
+    // Helper function to format drug information
+    function formatDrug(drugString) {
+        // Check if it's a combination therapy (contains +)
+        if (drugString.includes('+')) {
+            const drugs = drugString.split('+').map(d => d.trim());
+            const drugNames = drugs.map(d => {
+                const drugInfo = antibioticsDB[d];
+                return drugInfo ? drugInfo.name : d;
+            }).join(' + ');
+            return `<strong>${drugNames}</strong>`;
+        } else {
+            const drugInfo = antibioticsDB[drugString];
+            if (drugInfo) {
+                return `<strong>${drugInfo.name}</strong> - ${drugInfo.dosing}`;
+            } else {
+                // Handle special cases like "Pathogen-specific..." or "Surgical debridement..."
+                return `<strong>${drugString}</strong>`;
+            }
+        }
+    }
+
     let html = `
         <div class="detail-header">
             <h2>${infection.name}</h2>
@@ -57,20 +78,14 @@ function showInfectionDetail(infectionKey) {
                 <div class="treatment-box first-line">
                     <h4>🟢 First-Line Treatment</h4>
                     <ul>
-                        ${type.firstLine.map(drug => {
-                            const drugInfo = antibioticsDB[drug];
-                            return `<li><strong>${drugInfo.name}</strong> - ${drugInfo.dosing}</li>`;
-                        }).join('')}
+                        ${type.firstLine.map(drug => `<li>${formatDrug(drug)}</li>`).join('')}
                     </ul>
                 </div>
 
                 <div class="treatment-box second-line">
                     <h4>🟡 Alternative Options</h4>
                     <ul>
-                        ${type.secondLine.map(drug => {
-                            const drugInfo = antibioticsDB[drug];
-                            return `<li><strong>${drugInfo.name}</strong> - ${drugInfo.dosing}</li>`;
-                        }).join('')}
+                        ${type.secondLine.map(drug => `<li>${formatDrug(drug)}</li>`).join('')}
                     </ul>
                 </div>
 
