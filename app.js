@@ -39,80 +39,100 @@ function filterInfections() {
 
 // Show detailed infection treatment recommendations
 function showInfectionDetail(infectionKey) {
-    const infection = infectionGuidelines[infectionKey];
+    try {
+        console.log('Showing infection detail for:', infectionKey);
 
-    // Helper function to format drug information
-    function formatDrug(drugString) {
-        // Check if it's a combination therapy (contains +)
-        if (drugString.includes('+')) {
-            const drugs = drugString.split('+').map(d => d.trim());
-            const drugNames = drugs.map(d => {
-                const drugInfo = antibioticsDB[d];
-                return drugInfo ? drugInfo.name : d;
-            }).join(' + ');
-            return `<strong>${drugNames}</strong>`;
-        } else {
-            const drugInfo = antibioticsDB[drugString];
-            if (drugInfo) {
-                return `<strong>${drugInfo.name}</strong> - ${drugInfo.dosing}`;
+        // Check if infectionGuidelines exists
+        if (typeof infectionGuidelines === 'undefined') {
+            alert('Error: Antibiotic database not loaded. Please refresh the page.');
+            return;
+        }
+
+        const infection = infectionGuidelines[infectionKey];
+
+        // Check if infection exists
+        if (!infection) {
+            alert('Error: Infection "' + infectionKey + '" not found in database.');
+            return;
+        }
+
+        // Helper function to format drug information
+        function formatDrug(drugString) {
+            // Check if it's a combination therapy (contains +)
+            if (drugString.includes('+')) {
+                const drugs = drugString.split('+').map(d => d.trim());
+                const drugNames = drugs.map(d => {
+                    const drugInfo = antibioticsDB[d];
+                    return drugInfo ? drugInfo.name : d;
+                }).join(' + ');
+                return `<strong>${drugNames}</strong>`;
             } else {
-                // Handle special cases like "Pathogen-specific..." or "Surgical debridement..."
-                return `<strong>${drugString}</strong>`;
+                const drugInfo = antibioticsDB[drugString];
+                if (drugInfo) {
+                    return `<strong>${drugInfo.name}</strong> - ${drugInfo.dosing}`;
+                } else {
+                    // Handle special cases like "Pathogen-specific..." or "Surgical debridement..."
+                    return `<strong>${drugString}</strong>`;
+                }
             }
         }
-    }
 
-    let treatmentHTML = '';
-    infection.types.forEach(type => {
-        treatmentHTML += `
-            <div class="treatment-section">
-                <h3>${type.type}</h3>
+        let treatmentHTML = '';
+        infection.types.forEach(type => {
+            treatmentHTML += `
+                <div class="treatment-section">
+                    <h3>${type.type}</h3>
 
-                <div class="treatment-box first-line">
-                    <h4>🟢 First-Line Treatment</h4>
-                    <ul>
-                        ${type.firstLine.map(drug => `<li>${formatDrug(drug)}</li>`).join('')}
-                    </ul>
+                    <div class="treatment-box first-line">
+                        <h4>🟢 First-Line Treatment</h4>
+                        <ul>
+                            ${type.firstLine.map(drug => `<li>${formatDrug(drug)}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="treatment-box second-line">
+                        <h4>🟡 Alternative Options</h4>
+                        <ul>
+                            ${type.secondLine.map(drug => `<li>${formatDrug(drug)}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>Duration:</strong> ${type.duration}<br>
+                        <strong>Clinical Notes:</strong> ${type.notes}
+                    </div>
                 </div>
+            `;
+        });
 
-                <div class="treatment-box second-line">
-                    <h4>🟡 Alternative Options</h4>
-                    <ul>
-                        ${type.secondLine.map(drug => `<li>${formatDrug(drug)}</li>`).join('')}
-                    </ul>
+        // Create modal
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content infection-modal">
+                <div class="modal-header">
+                    <h2>${infection.name}</h2>
+                    <button onclick="closeModal()" class="close-btn">✕</button>
                 </div>
-
-                <div class="info-box">
-                    <strong>Duration:</strong> ${type.duration}<br>
-                    <strong>Clinical Notes:</strong> ${type.notes}
+                <div class="modal-body">
+                    ${treatmentHTML}
                 </div>
             </div>
         `;
-    });
 
-    // Create modal
-    const modal = document.createElement('div');
-    modal.className = 'modal';
-    modal.innerHTML = `
-        <div class="modal-content infection-modal">
-            <div class="modal-header">
-                <h2>${infection.name}</h2>
-                <button onclick="closeModal()" class="close-btn">✕</button>
-            </div>
-            <div class="modal-body">
-                ${treatmentHTML}
-            </div>
-        </div>
-    `;
+        document.body.appendChild(modal);
+        console.log('Modal created and appended');
 
-    document.body.appendChild(modal);
-
-    // Close on background click
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
+        // Close on background click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    } catch (error) {
+        console.error('Error in showInfectionDetail:', error);
+        alert('Error displaying infection details: ' + error.message + '\n\nPlease check the browser console for more details.');
+    }
 }
 
 // Load organism list
