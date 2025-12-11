@@ -374,32 +374,114 @@ const antibioticsDB = {
 
 // Infection-based treatment guidelines
 const infectionGuidelines = {
-    "uti": {
-        name: "Urinary Tract Infection (UTI)",
+    // RESPIRATORY INFECTIONS
+    "acute-sinusitis": {
+        name: "Acute Bacterial Sinusitis",
+        types: [
+            {
+                type: "Acute Bacterial Sinusitis (Adults)",
+                firstLine: ["amoxicillin-clavulanate"],
+                secondLine: ["doxycycline", "levofloxacin", "moxifloxacin"],
+                duration: "5-7 days",
+                notes: "Diagnosis: symptoms >10 days or worsening after initial improvement. Most sinusitis is viral - antibiotics only if bacterial criteria met."
+            }
+        ]
+    },
+    "chronic-sinusitis": {
+        name: "Chronic Sinusitis",
+        types: [
+            {
+                type: "Chronic Sinusitis with Acute Exacerbation",
+                firstLine: ["amoxicillin-clavulanate"],
+                secondLine: ["levofloxacin", "moxifloxacin"],
+                duration: "3-4 weeks",
+                notes: "Consider fungal sinusitis in immunocompromised. May need sinus culture for resistant organisms. ENT referral for recurrent cases."
+            }
+        ]
+    },
+    "pharyngitis-strep": {
+        name: "Streptococcal Pharyngitis (Strep Throat)",
+        types: [
+            {
+                type: "Strep Pharyngitis",
+                firstLine: ["penicillin-g", "amoxicillin"],
+                secondLine: ["cefuroxime", "azithromycin", "clindamycin"],
+                duration: "10 days (5 days for azithromycin)",
+                notes: "Confirm with rapid strep or culture. Prevents rheumatic fever and suppurative complications."
+            }
+        ]
+    },
+    "epiglottitis": {
+        name: "Epiglottitis",
+        types: [
+            {
+                type: "Acute Epiglottitis",
+                firstLine: ["ceftriaxone", "cefuroxime"],
+                secondLine: ["ampicillin-sulbactam"],
+                duration: "7-10 days",
+                notes: "EMERGENCY - secure airway first. Do NOT examine throat. Usually H. influenzae or Strep."
+            }
+        ]
+    },
+
+    // URINARY TRACT INFECTIONS
+    "uti-simple": {
+        name: "Uncomplicated Cystitis",
         types: [
             {
                 type: "Uncomplicated Cystitis (Women)",
                 firstLine: ["nitrofurantoin", "trimethoprim-sulfamethoxazole", "fosfomycin"],
-                secondLine: ["amoxicillin-clavulanate", "ciprofloxacin", "levofloxacin"],
-                duration: "3-5 days (7 days for nitrofurantoin)",
-                notes: "Check local resistance patterns. Avoid fluoroquinolones if possible."
-            },
+                secondLine: ["amoxicillin-clavulanate", "cefuroxime"],
+                duration: "3-5 days (7 days for nitrofurantoin, 1 dose for fosfomycin)",
+                notes: "Check local resistance patterns. Avoid fluoroquinolones if possible. Fosfomycin is single-dose therapy."
+            }
+        ]
+    },
+    "uti-men": {
+        name: "UTI in Men (Complicated)",
+        types: [
+            {
+                type: "UTI in Men",
+                firstLine: ["ciprofloxacin", "levofloxacin", "trimethoprim-sulfamethoxazole"],
+                secondLine: ["ceftriaxone"],
+                duration: "7-14 days",
+                notes: "Consider prostatitis. Always considered complicated. Rule out structural abnormalities."
+            }
+        ]
+    },
+    "pyelonephritis": {
+        name: "Acute Pyelonephritis",
+        types: [
             {
                 type: "Acute Pyelonephritis (Outpatient)",
                 firstLine: ["ciprofloxacin", "levofloxacin"],
                 secondLine: ["ceftriaxone"],
                 duration: "7-14 days",
-                notes: "If severe or unable to tolerate PO, admit for IV therapy"
+                notes: "If severe, vomiting, or unable to tolerate PO, admit for IV therapy"
             },
             {
-                type: "Complicated UTI / Pyelonephritis (Inpatient)",
+                type: "Acute Pyelonephritis (Inpatient)",
                 firstLine: ["ceftriaxone", "cefepime", "piperacillin-tazobactam"],
                 secondLine: ["meropenem", "ertapenem"],
-                duration: "10-14 days",
-                notes: "Broaden if risk factors for ESBL or Pseudomonas"
+                duration: "10-14 days total (can switch to PO when improving)",
+                notes: "Broaden if risk factors for ESBL or Pseudomonas. Blood cultures recommended."
             }
         ]
     },
+    "prostatitis": {
+        name: "Prostatitis",
+        types: [
+            {
+                type: "Acute Bacterial Prostatitis",
+                firstLine: ["ciprofloxacin", "levofloxacin"],
+                secondLine: ["trimethoprim-sulfamethoxazole"],
+                duration: "4-6 weeks",
+                notes: "Prolonged therapy needed for prostatic penetration. If septic, admit for IV therapy initially."
+            }
+        ]
+    },
+
+    // PNEUMONIA
     "pneumonia-cap": {
         name: "Community-Acquired Pneumonia (CAP)",
         types: [
@@ -586,6 +668,365 @@ const infectionGuidelines = {
                 secondLine: ["Surgical debridement often required"],
                 duration: "6-12 weeks or longer",
                 notes: "Consult orthopedics and ID. Consider biofilm coverage"
+            }
+        ]
+    },
+
+    // BITE WOUNDS
+    "dog-bite": {
+        name: "Dog Bite",
+        types: [
+            {
+                type: "Dog Bite Wound",
+                firstLine: ["amoxicillin-clavulanate"],
+                secondLine: ["doxycycline + metronidazole", "trimethoprim-sulfamethoxazole + metronidazole"],
+                duration: "3-5 days (prophylaxis) or 7-14 days (treatment)",
+                notes: "Covers Pasteurella, Staph, Strep, anaerobes. Irrigate wound. Check rabies/tetanus status. Prophylaxis if: hand/face bite, deep puncture, immunocompromised, or >8h old."
+            }
+        ]
+    },
+    "cat-bite": {
+        name: "Cat Bite",
+        types: [
+            {
+                type: "Cat Bite Wound",
+                firstLine: ["amoxicillin-clavulanate"],
+                secondLine: ["doxycycline + metronidazole", "moxifloxacin"],
+                duration: "3-5 days (prophylaxis) or 7-14 days (treatment)",
+                notes: "HIGH RISK for infection (50-80%). Pasteurella multocida most common. Deep puncture wounds. Almost always prophylax. Check rabies/tetanus."
+            }
+        ]
+    },
+    "human-bite": {
+        name: "Human Bite",
+        types: [
+            {
+                type: "Human Bite (Including Clenched Fist Injury)",
+                firstLine: ["amoxicillin-clavulanate"],
+                secondLine: ["piperacillin-tazobactam", "ertapenem", "ceftriaxone + metronidazole"],
+                duration: "5 days (prophylaxis) or 10-14 days (treatment)",
+                notes: "Mixed aerobic/anaerobic oral flora including Eikenella. Clenched fist injuries are high risk. Check HIV/Hep B/C status of biter if possible. Hand surgery consult for joint involvement."
+            }
+        ]
+    },
+
+    // DENTAL INFECTIONS
+    "dental-abscess": {
+        name: "Dental Abscess",
+        types: [
+            {
+                type: "Dental Abscess / Periapical Abscess",
+                firstLine: ["amoxicillin", "amoxicillin-clavulanate"],
+                secondLine: ["clindamycin", "metronidazole + penicillin-g"],
+                duration: "7-10 days",
+                notes: "I&D and dental referral primary treatment. Covers Strep viridans and oral anaerobes. Clindamycin for PCN-allergic."
+            }
+        ]
+    },
+    "ludwig-angina": {
+        name: "Ludwig's Angina",
+        types: [
+            {
+                type: "Ludwig's Angina (Severe Dental Infection)",
+                firstLine: ["piperacillin-tazobactam", "ampicillin-sulbactam"],
+                secondLine: ["clindamycin + ceftriaxone"],
+                duration: "Until resolved, then complete 2-3 weeks",
+                notes: "EMERGENCY - life-threatening. Secure airway (may need surgical). Bilateral submandibular/sublingual space infection. Dental source. Admit ICU."
+            }
+        ]
+    },
+
+    // JOINT AND BONE INFECTIONS
+    "septic-arthritis": {
+        name: "Septic Arthritis",
+        types: [
+            {
+                type: "Septic Arthritis (Non-Gonococcal)",
+                firstLine: ["nafcillin", "cefazolin", "vancomycin"],
+                secondLine: ["daptomycin"],
+                duration: "3-4 weeks (2 weeks IV minimum)",
+                notes: "Joint aspiration/drainage required. Usually Staph aureus. Vancomycin if MRSA risk or PCN-allergic. Orthopedics consult."
+            },
+            {
+                type: "Gonococcal Arthritis",
+                firstLine: ["ceftriaxone"],
+                secondLine: ["cefotaxime"],
+                duration: "7-14 days total (switch to PO after 24-48h improvement)",
+                notes: "Disseminated gonococcal infection. Test for chlamydia. Treat partners. Can switch to cefixime or ciprofloxacin PO if susceptible."
+            }
+        ]
+    },
+
+    // HOSPITAL-ACQUIRED INFECTIONS
+    "hap-vap": {
+        name: "Hospital-Acquired Pneumonia (HAP) / Ventilator-Associated Pneumonia (VAP)",
+        types: [
+            {
+                type: "HAP/VAP (No Risk Factors for MDR)",
+                firstLine: ["piperacillin-tazobactam", "cefepime", "levofloxacin"],
+                secondLine: ["meropenem"],
+                duration: "7 days (may extend if slow response)",
+                notes: "Cover Pseudomonas and MRSA if risk factors present. De-escalate based on cultures."
+            },
+            {
+                type: "HAP/VAP (MDR Risk Factors)",
+                firstLine: ["piperacillin-tazobactam + vancomycin", "cefepime + vancomycin + tobramycin"],
+                secondLine: ["meropenem + vancomycin + aminoglycoside"],
+                duration: "7-14 days",
+                notes: "MDR risk: prior IV antibiotics within 90 days, >5 days hospitalization, high local MDR rates. Double Pseudomonas coverage. MRSA coverage."
+            }
+        ]
+    },
+    "aspiration-pneumonia": {
+        name: "Aspiration Pneumonia",
+        types: [
+            {
+                type: "Aspiration Pneumonia (Community)",
+                firstLine: ["amoxicillin-clavulanate", "ampicillin-sulbactam"],
+                secondLine: ["clindamycin + ceftriaxone", "moxifloxacin"],
+                duration: "7-10 days",
+                notes: "Cover oral anaerobes. Risk factors: dysphagia, altered consciousness, GERD. Consider barium swallow study."
+            },
+            {
+                type: "Aspiration Pneumonia (Hospital/Nursing Home)",
+                firstLine: ["piperacillin-tazobactam", "cefepime + metronidazole"],
+                secondLine: ["meropenem"],
+                duration: "7-14 days",
+                notes: "Broader coverage for hospital flora including MRSA and Pseudomonas risk."
+            }
+        ]
+    },
+    "c-diff": {
+        name: "Clostridioides difficile Infection (C. diff)",
+        types: [
+            {
+                type: "Initial Episode (Non-Severe)",
+                firstLine: ["vancomycin"],
+                secondLine: ["fidaxomicin"],
+                duration: "10 days",
+                notes: "Vancomycin 125mg PO QID. Fidaxomicin preferred for recurrent. Metronidazole only if vanc unavailable. Stop offending antibiotics if possible."
+            },
+            {
+                type: "Severe C. diff (WBC >15k, Cr >1.5x baseline)",
+                firstLine: ["vancomycin"],
+                secondLine: ["vancomycin + metronidazole"],
+                duration: "10 days",
+                notes: "Vancomycin 125mg PO QID. Add IV metronidazole if ileus. Surgery consult if fulminant (toxic megacolon, perforation)."
+            },
+            {
+                type: "Recurrent C. diff",
+                firstLine: ["fidaxomicin", "vancomycin"],
+                secondLine: ["vancomycin taper", "fecal microbiota transplant"],
+                duration: "Varies",
+                notes: "Fidaxomicin preferred. Consider FMT after 2nd recurrence. Vanc pulse/taper regimen option."
+            }
+        ]
+    },
+
+    // SEXUALLY TRANSMITTED INFECTIONS
+    "gonorrhea": {
+        name: "Gonorrhea",
+        types: [
+            {
+                type: "Uncomplicated Gonorrhea (Urethral/Cervical/Rectal)",
+                firstLine: ["ceftriaxone"],
+                secondLine: ["gentamicin + azithromycin"],
+                duration: "Single dose",
+                notes: "Ceftriaxone 500mg IM x1 (1g if >150kg). Always test and treat for chlamydia. Test of cure in 7-14 days if pharyngeal. Treat partners."
+            },
+            {
+                type: "Disseminated Gonococcal Infection",
+                firstLine: ["ceftriaxone"],
+                secondLine: ["cefotaxime"],
+                duration: "7 days total",
+                notes: "Ceftriaxone 1-2g IV daily. Can switch to PO after 24-48h improvement if susceptible."
+            }
+        ]
+    },
+    "chlamydia": {
+        name: "Chlamydia",
+        types: [
+            {
+                type: "Uncomplicated Chlamydia (Urethral/Cervical/Rectal)",
+                firstLine: ["doxycycline", "azithromycin"],
+                secondLine: ["levofloxacin"],
+                duration: "7 days (doxy) or single dose (azithro 1g)",
+                notes: "Doxycycline 100mg BID x7 days preferred. Test for gonorrhea. Abstain until 7 days after treatment. Treat partners."
+            }
+        ]
+    },
+    "pid": {
+        name: "Pelvic Inflammatory Disease (PID)",
+        types: [
+            {
+                type: "PID (Outpatient)",
+                firstLine: ["ceftriaxone + doxycycline + metronidazole"],
+                secondLine: ["cefoxitin + doxycycline + metronidazole"],
+                duration: "14 days (doxy + metronidazole), single dose ceftriaxone",
+                notes: "Ceftriaxone 500mg IM x1, then doxy 100mg BID + metronidazole 500mg BID x14 days. Low threshold to admit if severe."
+            },
+            {
+                type: "PID (Inpatient)",
+                firstLine: ["cefoxitin + doxycycline", "clindamycin + gentamicin"],
+                secondLine: ["piperacillin-tazobactam + doxycycline"],
+                duration: "Minimum 24h after clinical improvement, then switch to PO for 14 days total",
+                notes: "Admit if: pregnant, tubo-ovarian abscess, unable to tolerate PO, severe symptoms, or failed outpatient therapy."
+            }
+        ]
+    },
+    "syphilis": {
+        name: "Syphilis",
+        types: [
+            {
+                type: "Primary/Secondary/Early Latent Syphilis",
+                firstLine: ["penicillin-g"],
+                secondLine: ["doxycycline", "ceftriaxone"],
+                duration: "Single dose (benzathine PCN 2.4 million units IM)",
+                notes: "Benzathine penicillin G 2.4 million units IM x1. Doxy 100mg BID x14 days if PCN-allergic (not pregnant). Jarisch-Herxheimer reaction possible."
+            },
+            {
+                type: "Neurosyphilis",
+                firstLine: ["penicillin-g"],
+                secondLine: ["ceftriaxone"],
+                duration: "10-14 days",
+                notes: "Aqueous penicillin G 18-24 million units daily continuous or divided q4h IV. LP to confirm CSF clearance."
+            }
+        ]
+    },
+
+    // TICK-BORNE ILLNESSES
+    "lyme-disease": {
+        name: "Lyme Disease",
+        types: [
+            {
+                type: "Early Localized Lyme (Erythema Migrans)",
+                firstLine: ["doxycycline", "amoxicillin"],
+                secondLine: ["cefuroxime"],
+                duration: "10-14 days (doxy) or 14-21 days (amox)",
+                notes: "Doxycycline 100mg BID preferred. Single dose doxy within 72h of tick bite for prophylaxis in endemic areas."
+            },
+            {
+                type: "Lyme Carditis",
+                firstLine: ["ceftriaxone"],
+                secondLine: ["penicillin-g"],
+                duration: "14-21 days",
+                notes: "Admit if high-degree AV block or symptoms. May need temporary pacemaker. Switch to PO when PR interval normalizing."
+            },
+            {
+                type: "Lyme Meningitis/Neuroborreliosis",
+                firstLine: ["ceftriaxone"],
+                secondLine: ["penicillin-g", "cefotaxime"],
+                duration: "14-28 days",
+                notes: "Ceftriaxone 2g IV daily. LP shows lymphocytic pleocytosis. Bell's palsy from Lyme can be treated PO."
+            }
+        ]
+    },
+    "rmsf": {
+        name: "Rocky Mountain Spotted Fever (RMSF)",
+        types: [
+            {
+                type: "Rocky Mountain Spotted Fever",
+                firstLine: ["doxycycline"],
+                secondLine: ["chloramphenicol"],
+                duration: "7 days or until 3 days after fever resolves",
+                notes: "Doxycycline 100mg BID. Empiric treatment if suspected - don't wait for confirmatory testing. Classic triad: fever, headache, rash (starts peripherally). Can be fatal if untreated."
+            }
+        ]
+    },
+
+    // GI INFECTIONS
+    "infectious-diarrhea": {
+        name: "Infectious Diarrhea (Bacterial)",
+        types: [
+            {
+                type: "Traveler's Diarrhea (Empiric)",
+                firstLine: ["azithromycin", "ciprofloxacin", "rifaximin"],
+                secondLine: ["levofloxacin"],
+                duration: "1-3 days",
+                notes: "Usually self-limited. Antibiotics if severe or bloody. Azithromycin preferred in SE Asia (quinolone resistance). Loperamide if non-inflammatory."
+            },
+            {
+                type: "Salmonella/Shigella",
+                firstLine: ["azithromycin", "ciprofloxacin"],
+                secondLine: ["ceftriaxone"],
+                duration: "3-7 days",
+                notes: "Treat if severe, bloody, or immunocompromised. Increasing quinolone resistance. Don't use antimotility agents with bloody diarrhea."
+            },
+            {
+                type: "Campylobacter",
+                firstLine: ["azithromycin"],
+                secondLine: ["ciprofloxacin"],
+                duration: "3-5 days",
+                notes: "Treat if severe or persistent. High quinolone resistance. Associated with Guillain-Barré syndrome."
+            }
+        ]
+    },
+    "h-pylori": {
+        name: "Helicobacter pylori",
+        types: [
+            {
+                type: "H. pylori Eradication",
+                firstLine: ["amoxicillin", "clarithromycin"],
+                secondLine: ["metronidazole", "levofloxacin"],
+                duration: "14 days",
+                notes: "Triple therapy: PPI + amoxicillin 1g BID + clarithromycin 500mg BID. Quadruple therapy if high clarithro resistance. Confirm eradication."
+            }
+        ]
+    },
+
+    // OTHER SPECIFIC INFECTIONS
+    "surgical-site-infection": {
+        name: "Surgical Site Infection (SSI)",
+        types: [
+            {
+                type: "Superficial SSI",
+                firstLine: ["cefazolin", "nafcillin"],
+                secondLine: ["vancomycin", "doxycycline"],
+                duration: "5-7 days",
+                notes: "Usually Staph aureus or Strep. Open wound, remove sutures. Add MRSA coverage if risk factors. Culture wound."
+            },
+            {
+                type: "Deep/Organ Space SSI",
+                firstLine: ["vancomycin + piperacillin-tazobactam", "vancomycin + cefepime"],
+                secondLine: ["daptomycin + meropenem"],
+                duration: "Varies, often weeks",
+                notes: "Depends on surgery type. Broad coverage until cultures available. May need surgical washout. Consider biofilm organisms."
+            }
+        ]
+    },
+    "febrile-neutropenia": {
+        name: "Febrile Neutropenia",
+        types: [
+            {
+                type: "Febrile Neutropenia (High Risk)",
+                firstLine: ["cefepime", "piperacillin-tazobactam"],
+                secondLine: ["meropenem"],
+                duration: "Until ANC >500 and afebrile x24-48h",
+                notes: "High risk: ANC <100, mucositis, prolonged neutropenia expected. Add vancomycin if hypotensive, skin infection, or positive blood cultures. Add antifungal if fever >4-7 days."
+            }
+        ]
+    },
+    "uti-catheter": {
+        name: "Catheter-Associated UTI (CAUTI)",
+        types: [
+            {
+                type: "Catheter-Associated UTI",
+                firstLine: ["ceftriaxone", "ciprofloxacin", "levofloxacin"],
+                secondLine: ["piperacillin-tazobactam", "cefepime"],
+                duration: "7 days (men may need 10-14 days)",
+                notes: "Remove or replace catheter if possible. Broader coverage if recent hospitalization or antibiotics. Consider ESBL risk."
+            }
+        ]
+    },
+    "mastitis": {
+        name: "Mastitis (Lactational)",
+        types: [
+            {
+                type: "Lactational Mastitis",
+                firstLine: ["cefazolin", "dicloxacillin"],
+                secondLine: ["clindamycin", "trimethoprim-sulfamethoxazole"],
+                duration: "10-14 days",
+                notes: "Usually Staph aureus. Continue breastfeeding/pumping. Add MRSA coverage if abscess or not improving in 48-72h. I&D if abscess."
             }
         ]
     }

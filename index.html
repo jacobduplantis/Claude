@@ -32,37 +32,170 @@
             </div>
 
             <div class="infection-categories">
-                <div class="infection-card" onclick="showInfectionDetail('uti')">
-                    <h3>Urinary Tract Infection (UTI)</h3>
-                    <p>Uncomplicated cystitis, pyelonephritis</p>
+                <!-- RESPIRATORY -->
+                <div class="infection-card" onclick="showInfectionDetail('acute-sinusitis')">
+                    <h3>Acute Sinusitis</h3>
+                    <p>Bacterial sinusitis symptoms >10 days</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('chronic-sinusitis')">
+                    <h3>Chronic Sinusitis</h3>
+                    <p>Chronic symptoms with acute exacerbation</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('pharyngitis-strep')">
+                    <h3>Strep Throat</h3>
+                    <p>Streptococcal pharyngitis</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('epiglottitis')">
+                    <h3>Epiglottitis</h3>
+                    <p>Emergency airway infection</p>
                 </div>
                 <div class="infection-card" onclick="showInfectionDetail('pneumonia-cap')">
-                    <h3>Community-Acquired Pneumonia (CAP)</h3>
-                    <p>Outpatient and inpatient management</p>
+                    <h3>Community-Acquired Pneumonia</h3>
+                    <p>Outpatient and inpatient CAP</p>
                 </div>
+                <div class="infection-card" onclick="showInfectionDetail('hap-vap')">
+                    <h3>Hospital/Ventilator Pneumonia</h3>
+                    <p>HAP and VAP management</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('aspiration-pneumonia')">
+                    <h3>Aspiration Pneumonia</h3>
+                    <p>Community and healthcare-associated</p>
+                </div>
+
+                <!-- URINARY TRACT -->
+                <div class="infection-card" onclick="showInfectionDetail('uti-simple')">
+                    <h3>Uncomplicated UTI/Cystitis</h3>
+                    <p>Simple bladder infection in women</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('uti-men')">
+                    <h3>UTI in Men</h3>
+                    <p>Complicated UTI, consider prostatitis</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('pyelonephritis')">
+                    <h3>Pyelonephritis</h3>
+                    <p>Kidney infection, outpatient/inpatient</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('prostatitis')">
+                    <h3>Prostatitis</h3>
+                    <p>Acute bacterial prostatitis</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('uti-catheter')">
+                    <h3>Catheter-Associated UTI</h3>
+                    <p>CAUTI management</p>
+                </div>
+
+                <!-- SKIN & SOFT TISSUE -->
                 <div class="infection-card" onclick="showInfectionDetail('skin-soft-tissue')">
-                    <h3>Skin & Soft Tissue Infections</h3>
-                    <p>Cellulitis, abscess, necrotizing fasciitis</p>
+                    <h3>Cellulitis & Abscess</h3>
+                    <p>Skin infections, purulent vs non-purulent</p>
                 </div>
+                <div class="infection-card" onclick="showInfectionDetail('dog-bite')">
+                    <h3>Dog Bite</h3>
+                    <p>Pasteurella coverage needed</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('cat-bite')">
+                    <h3>Cat Bite</h3>
+                    <p>High infection risk, deep punctures</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('human-bite')">
+                    <h3>Human Bite</h3>
+                    <p>Including clenched fist injuries</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('surgical-site-infection')">
+                    <h3>Surgical Site Infection</h3>
+                    <p>Superficial and deep SSI</p>
+                </div>
+
+                <!-- DENTAL -->
+                <div class="infection-card" onclick="showInfectionDetail('dental-abscess')">
+                    <h3>Dental Abscess</h3>
+                    <p>Periapical abscess, tooth infection</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('ludwig-angina')">
+                    <h3>Ludwig's Angina</h3>
+                    <p>Emergency dental space infection</p>
+                </div>
+
+                <!-- JOINT & BONE -->
+                <div class="infection-card" onclick="showInfectionDetail('septic-arthritis')">
+                    <h3>Septic Arthritis</h3>
+                    <p>Gonococcal and non-gonococcal</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('osteomyelitis')">
+                    <h3>Osteomyelitis</h3>
+                    <p>Acute and chronic bone infection</p>
+                </div>
+
+                <!-- CNS -->
                 <div class="infection-card" onclick="showInfectionDetail('meningitis')">
-                    <h3>Meningitis</h3>
-                    <p>Bacterial meningitis empiric therapy</p>
+                    <h3>Bacterial Meningitis</h3>
+                    <p>Empiric therapy by age</p>
                 </div>
+
+                <!-- ABDOMINAL -->
                 <div class="infection-card" onclick="showInfectionDetail('intra-abdominal')">
                     <h3>Intra-abdominal Infections</h3>
                     <p>Appendicitis, diverticulitis, peritonitis</p>
                 </div>
-                <div class="infection-card" onclick="showInfectionDetail('sepsis')">
-                    <h3>Sepsis/Septic Shock</h3>
-                    <p>Empiric broad-spectrum coverage</p>
+                <div class="infection-card" onclick="showInfectionDetail('infectious-diarrhea')">
+                    <h3>Infectious Diarrhea</h3>
+                    <p>Traveler's, Salmonella, Shigella, Campylobacter</p>
                 </div>
+                <div class="infection-card" onclick="showInfectionDetail('c-diff')">
+                    <h3>C. difficile Infection</h3>
+                    <p>Initial, severe, and recurrent C. diff</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('h-pylori')">
+                    <h3>H. pylori</h3>
+                    <p>Triple/quadruple therapy for eradication</p>
+                </div>
+
+                <!-- CARDIAC & SEPSIS -->
                 <div class="infection-card" onclick="showInfectionDetail('endocarditis')">
                     <h3>Endocarditis</h3>
                     <p>Native and prosthetic valve</p>
                 </div>
-                <div class="infection-card" onclick="showInfectionDetail('osteomyelitis')">
-                    <h3>Osteomyelitis</h3>
-                    <p>Acute and chronic bone infections</p>
+                <div class="infection-card" onclick="showInfectionDetail('sepsis')">
+                    <h3>Sepsis/Septic Shock</h3>
+                    <p>Community and hospital-onset</p>
+                </div>
+
+                <!-- STIs -->
+                <div class="infection-card" onclick="showInfectionDetail('gonorrhea')">
+                    <h3>Gonorrhea</h3>
+                    <p>Uncomplicated and disseminated</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('chlamydia')">
+                    <h3>Chlamydia</h3>
+                    <p>Urethral/cervical/rectal infection</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('pid')">
+                    <h3>Pelvic Inflammatory Disease</h3>
+                    <p>Outpatient and inpatient treatment</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('syphilis')">
+                    <h3>Syphilis</h3>
+                    <p>Early latent and neurosyphilis</p>
+                </div>
+
+                <!-- TICK-BORNE -->
+                <div class="infection-card" onclick="showInfectionDetail('lyme-disease')">
+                    <h3>Lyme Disease</h3>
+                    <p>Early, carditis, and neuroborreliosis</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('rmsf')">
+                    <h3>Rocky Mountain Spotted Fever</h3>
+                    <p>Empiric doxycycline if suspected</p>
+                </div>
+
+                <!-- SPECIAL POPULATIONS -->
+                <div class="infection-card" onclick="showInfectionDetail('febrile-neutropenia')">
+                    <h3>Febrile Neutropenia</h3>
+                    <p>High-risk chemotherapy patients</p>
+                </div>
+                <div class="infection-card" onclick="showInfectionDetail('mastitis')">
+                    <h3>Lactational Mastitis</h3>
+                    <p>Breastfeeding-associated infection</p>
                 </div>
             </div>
 
